@@ -33,6 +33,10 @@ class Deck
     @deck = @deck.shuffle
   end
 
+  def take_all
+    @deck.slice!(0..-1)
+  end
+
   def size
     @deck.size
   end
