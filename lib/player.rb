@@ -22,4 +22,13 @@ class Player
 
     :stand
   end
+
+  def blackjack_twoone_bust_score
+    if hit_or_stand? == :stand
+      return :blackjack if @hand.score == 21 && @hand.number_of_cards == 2
+      return :twoone if @hand.score == 21
+      return :bust if @hand.score > 21
+    end
+    @hand.score
+  end
 end
