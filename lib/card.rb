@@ -10,9 +10,17 @@ class Card
     @face = face
   end
 
+  def ace?
+    return true if @face == :ace
+
+    false
+  end
+
   def show
-    msg = "#{@face.ljust(8)} of #{@suit}"
-    puts msg
-    msg
+    "#{@value.to_s.ljust(3)} of #{@suit} with a face of #{@face}"
+  end
+
+  def to_s
+    show
   end
 end

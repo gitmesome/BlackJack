@@ -16,6 +16,8 @@ class TestDeck < Minitest::Test
   def test_deal
     card = @deck.deal
     assert_equal(card.suit, Deck::SUITS[0], 'Card should be of correct suit')
+    assert_equal(card.value, 2, 'Card should be a 1')
+    assert_equal(card.face, :two, 'Card should have a face of :two')
     assert_equal(51, @deck.size, 'Wrong deck size after first deal')
     52.times { card = @deck.deal }
     assert_nil(card, 'No more cards left in the deck')
