@@ -13,6 +13,7 @@ class TestHand < Minitest::Test
     @card3 = Card.new('Diamonds', 11, :ace)
     @card4 = Card.new('Diamonds', 6, :nine)
     @card5 = Card.new('Diamonds', 2, :two)
+    @card6 = Card.new('Diamonds', 5, :five)
     @player = Player.new(@hand)
   end
 
@@ -70,7 +71,7 @@ class TestHand < Minitest::Test
 
   def test_blackjack_twoone_bust_score_score
     @player.hand.take(@card1)
-    @player.hand.take(@card4)
+    @player.hand.take(@card6)
     assert_equal(@player.blackjack_twoone_bust_score, @player.hand.score, 'we should have a score')
   end
 
