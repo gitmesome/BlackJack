@@ -1,6 +1,8 @@
 # frozen_string_literal: true
-#
-# require 'player'
+
+require 'player'
+require 'dealer'
+require 'shoe'
 
 # Class for game actions
 class Game
@@ -8,6 +10,12 @@ class Game
     @dealer = dealer
     @players = players
     @shoe = shoe
+  end
+
+  def start
+    draw
+    resolve
+    result
   end
 
   def draw
@@ -64,9 +72,14 @@ class Game
   end
 
   def result
+    hands = "#{@dealer.class.name} - #{@dealer.show_hand}\n"
+    @players.each do |player|
+      hands += "#{player.class.name} - #{player.show_hand}\n"
+    end
     {
       result: @players.collect { |player| player.standing.to_s[0] },
-      score: @players.collect { |player| player.score },
+      score: @players.collect(&:score),
+      hands: hands
     }
   end
 end
