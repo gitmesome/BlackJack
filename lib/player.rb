@@ -4,6 +4,8 @@ require 'hand'
 
 # Class for player actions
 class Player
+  # TODO: looks like the '@status' attribute is useless and should be refactored and
+  # removed.  This would affect game.rb and associated tests too
   attr_accessor :hand
   attr_reader :status, :standing
 
