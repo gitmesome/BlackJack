@@ -63,6 +63,9 @@ class Game
         elsif %i[blackjack twoone].include?(dealer_disposition)
           player.standing_set(:loss)
           player.play_status(false)
+        elsif dealer_disposition == :bust
+          player.play_status(false)
+          player.standing_set(:win)
         else
           player.play_status(true)
           player.standing_set(:playing)

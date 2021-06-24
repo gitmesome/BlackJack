@@ -41,6 +41,25 @@ class TestGame < Minitest::Test
     assert_equal(:stand, @players[0].blackjack_twoone_bust_score, 'P1 should be standing')
   end
 
+  def test_resolve_bust_on_d
+    @dealer.hit(@card1)
+    @dealer.hit(@card2)
+    @dealer.hit(@card4)
+    @players[0].hit(@card1)
+    @players[0].hit(@card3)
+    @players[1].hit(@card1)
+    @players[1].hit(@card2)
+    @game.resolve
+    assert_equal(:bust, @dealer.blackjack_twoone_bust_score, 'Dealer should be standing')
+    assert_equal(:blackjack, @players[0].blackjack_twoone_bust_score, 'P1 should have blackjack')
+    assert_equal(:stand, @players[1].blackjack_twoone_bust_score, 'P2 should be standing')
+    assert_equal(:win, @players[0].standing, 'P1 should have win')
+    assert_equal(:out, @players[0].status, 'P1 should be out')
+    assert_equal(:out, @players[1].status, 'P2 should be out')
+    assert_equal(:win, @players[1].standing, 'P2 should have win')
+    assert_equal(%w[w w], @game.result[:result], 'Everybody wins')
+  end
+
   def test_resolve_stand_p1_over_d_over_p2
     @dealer.hit(@card1)
     @dealer.hit(@card2)
