@@ -2,8 +2,8 @@
 #
 # require 'player'
 
-# Class for turn actions
-class Turn
+# Class for game actions
+class Game
   def initialize(dealer, players, shoe)
     @dealer = dealer
     @players = players
