@@ -64,6 +64,9 @@ class Game
   end
 
   def result
-    @players.collect { |player| player.standing.to_s[0] }
+    {
+      result: @players.collect { |player| player.standing.to_s[0] },
+      score: @players.collect { |player| player.score },
+    }
   end
 end

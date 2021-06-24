@@ -33,4 +33,12 @@ class Hand
     end
     sum
   end
+
+  def show
+    msg = []
+    @hand.each do |card|
+      msg << card.to_s
+    end
+    msg.join(', ') + " = #{score}"
+  end
 end

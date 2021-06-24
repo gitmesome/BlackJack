@@ -56,7 +56,7 @@ class TestGame < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:loss, @players[1].standing, 'P2 should have lost to dealer')
-    assert_equal(%w[w l], @game.result, 'fidy-fidy')
+    assert_equal(%w[w l], @game.result[:result], 'fidy-fidy')
   end
 
   def test_resolve_bust
@@ -67,7 +67,7 @@ class TestGame < Minitest::Test
     assert_equal(:bust, @players[0].blackjack_twoone_bust_score, 'P1 is busted')
     assert_equal(:loss, @players[0].standing, 'P1 should have loss on bust')
     assert_equal(:out, @players[0].status, 'P1 should be out')
-    assert_equal(%w[l p], @game.result, 'busted')
+    assert_equal(%w[l p], @game.result[:result], 'busted')
   end
 
   def test_resolve_twoone_on_p1_not_p2_stand_on_d
@@ -86,7 +86,7 @@ class TestGame < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:win, @players[1].standing, 'P2 should have beaten dealer')
-    assert_equal(%w[w w], @game.result, 'everybody wins')
+    assert_equal(%w[w w], @game.result[:result], 'everybody wins')
   end
 
   def test_resolve_twoone_on_d_p1_not_p2
@@ -106,7 +106,7 @@ class TestGame < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:loss, @players[1].standing, 'P2 should have loss when dealer has 21')
-    assert_equal(%w[p l], @game.result, 'nodody wins')
+    assert_equal(%w[p l], @game.result[:result], 'nodody wins')
   end
 
   def test_resolve_blackjack_on_d_p1_not_p2
@@ -124,7 +124,7 @@ class TestGame < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:loss, @players[1].standing, 'P2 should have loss')
-    assert_equal(%w[p l], @game.result, 'nodody wins')
+    assert_equal(%w[p l], @game.result[:result], 'nodody wins')
   end
 
   def test_resolve_blackjack_on_p1_not_d_p2
@@ -142,7 +142,7 @@ class TestGame < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:win, @players[1].standing, 'P2 should have win')
-    assert_equal(%w[w w], @game.result, 'Everybody wins')
+    assert_equal(%w[w w], @game.result[:result], 'Everybody wins')
   end
 
   def test_draw

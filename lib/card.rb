@@ -17,7 +17,7 @@ class Card
   end
 
   def show
-    "#{@value.to_s.ljust(3)} of #{@suit} with a face of #{@face}"
+    "#{@face.to_s.capitalize} of #{@suit} (#{@value.to_s.rjust(2)})"
   end
 
   def to_s
