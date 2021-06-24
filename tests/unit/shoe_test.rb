@@ -14,9 +14,10 @@ class TestShoe < Minitest::Test
   end
 
   def test_deal
-    card = @shoe.deal
+    @shoe.deal
     assert_equal(311, @shoe.size, 'Wrong shoe size after first deal')
-    312.times { card = @shoe.deal }
-    assert_nil(card, 'No more cards left in the shoe')
+    assert_raises RuntimeError do
+      312.times { @shoe.deal }
+    end
   end
 end

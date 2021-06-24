@@ -1,0 +1,5 @@
+HowTo:
+- Run tests:
+    rake test
+- Run the match:
+    ruby -I./lib -r "./lib/match.rb" -e "Match.new"
