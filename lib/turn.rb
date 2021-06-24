@@ -1,4 +1,6 @@
 # frozen_string_literal: true
+#
+# require 'player'
 
 # Class for turn actions
 class Turn
@@ -8,11 +10,12 @@ class Turn
     @shoe = shoe
   end
 
-  def play
-    @players.select { |p| p.status == :in }.each do |player|
-      player.hit(@shoe.deal) if player.hit_or_stand? == :hit
+  def draw
+    @players.each do |player|
+      player.hit(@shoe.deal) while player.hit_or_stand? == :hit
     end
-    @dealer.hit(@shoe.deal) if @dealer.hit_or_stand? == :hit
+
+    @dealer.hit(@shoe.deal) while @dealer.hit_or_stand? == :hit
   end
 
   def resolve
@@ -58,5 +61,9 @@ class Turn
         end
       end
     end
+  end
+
+  def result
+    @players.collect { |player| player.standing.to_s[0] }
   end
 end

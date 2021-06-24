@@ -56,6 +56,7 @@ class TestTurn < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:loss, @players[1].standing, 'P2 should have lost to dealer')
+    assert_equal(%w[w l], @turn.result, 'fidy-fidy')
   end
 
   def test_resolve_bust
@@ -66,6 +67,7 @@ class TestTurn < Minitest::Test
     assert_equal(:bust, @players[0].blackjack_twoone_bust_score, 'P1 is busted')
     assert_equal(:loss, @players[0].standing, 'P1 should have loss on bust')
     assert_equal(:out, @players[0].status, 'P1 should be out')
+    assert_equal(%w[l p], @turn.result, 'busted')
   end
 
   def test_resolve_twoone_on_p1_not_p2_stand_on_d
@@ -84,6 +86,7 @@ class TestTurn < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:win, @players[1].standing, 'P2 should have beaten dealer')
+    assert_equal(%w[w w], @turn.result, 'everybody wins')
   end
 
   def test_resolve_twoone_on_d_p1_not_p2
@@ -103,6 +106,7 @@ class TestTurn < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:loss, @players[1].standing, 'P2 should have loss when dealer has 21')
+    assert_equal(%w[p l], @turn.result, 'nodody wins')
   end
 
   def test_resolve_blackjack_on_d_p1_not_p2
@@ -120,6 +124,7 @@ class TestTurn < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:loss, @players[1].standing, 'P2 should have loss')
+    assert_equal(%w[p l], @turn.result, 'nodody wins')
   end
 
   def test_resolve_blackjack_on_p1_not_d_p2
@@ -137,18 +142,14 @@ class TestTurn < Minitest::Test
     assert_equal(:out, @players[0].status, 'P1 should be out')
     assert_equal(:out, @players[1].status, 'P2 should be out')
     assert_equal(:win, @players[1].standing, 'P2 should have win')
+    assert_equal(%w[w w], @turn.result, 'Everybody wins')
   end
 
-  def test_play
-    @turn.play
-    assert_equal(1, @dealer.hand.hand.size, 'Dealer should have one card')
+  def test_draw
+    @turn.draw
+    assert_operator(@dealer.hand.hand.size, :>=, 2, 'Dealer should have a proper hand')
     @players.each do |player|
-      assert_equal(1, player.hand.hand.size, 'Player should have one card')
-    end
-    @turn.play
-    assert_equal(2, @dealer.hand.hand.size, 'Dealer should have one card')
-    @players.each do |player|
-      assert_equal(2, player.hand.hand.size, 'Player should have one card')
+      assert_operator(player.hand.hand.size, :>=, 2, 'Player should have a proper hand')
     end
   end
 end
