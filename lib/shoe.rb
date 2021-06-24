@@ -21,7 +21,9 @@ class Shoe
   end
 
   def deal
-    @shoe.shift unless @shoe.empty?
+    raise 'Shoe has run out of cards' if @shoe.empty?
+
+    @shoe.shift
   end
 
   def shuffle
