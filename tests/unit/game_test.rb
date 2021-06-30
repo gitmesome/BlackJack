@@ -21,6 +21,25 @@ class TestGame < Minitest::Test
     @game = Game.new(@dealer, @players, @shoe)
   end
 
+  def test_resolve_push
+    @dealer.hit(@card1)
+    @dealer.hit(@card1)
+    @players[0].hit(@card1)
+    @players[0].hit(@card1)
+    @players[1].hit(@card6)
+    @players[1].hit(@card6)
+    @players[1].hit(@card1)
+    @game.resolve
+    assert_equal(:stand, @dealer.blackjack_twoone_bust_score, 'Dealer should have 20')
+    assert_equal(:stand, @players[0].blackjack_twoone_bust_score, 'P1 should have 20')
+    assert_equal(:stand, @players[1].blackjack_twoone_bust_score, 'P2 should have 20')
+    assert_equal(:push, @players[0].standing, 'P1 should have push in 21')
+    assert_equal(:out, @players[0].status, 'P1 should be out')
+    assert_equal(:out, @players[1].status, 'P2 should be out')
+    assert_equal(:push, @players[1].standing, 'P2 should have loss when dealer has 21')
+    assert_equal(%w[p p], @game.result[:result], 'nodody wins')
+  end
+
   def test_resolve_stand_walk_to
     @players[0].hit(@card2)
     @game.resolve
@@ -165,7 +184,7 @@ class TestGame < Minitest::Test
   end
 
   def test_draw
-    @game.draw
+    @game.first_draw
     assert_operator(@dealer.hand.hand.size, :>=, 2, 'Dealer should have a proper hand')
     @players.each do |player|
       assert_operator(player.hand.hand.size, :>=, 2, 'Player should have a proper hand')

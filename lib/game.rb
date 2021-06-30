@@ -13,16 +13,31 @@ class Game
   end
 
   def start
-    draw
-    resolve
+    first_draw
+    unless resolve
+      next_player_draw
+      next_dealer_draw
+      resolve
+    end
     result
   end
 
-  def draw
+  def first_draw
+    2.times do
+      @players.each do |player|
+        player.hit(@shoe.deal)
+      end
+      @dealer.hit(@shoe.deal)
+    end
+  end
+
+  def next_player_draw
     @players.each do |player|
       player.hit(@shoe.deal) while player.hit_or_stand? == :hit
     end
+  end
 
+  def next_dealer_draw
     @dealer.hit(@shoe.deal) while @dealer.hit_or_stand? == :hit
   end
 
@@ -68,9 +83,19 @@ class Game
           player.standing_set(:win) # Dealer is bust while player is standing...win
         else
           player.play_status(true)
-          player.standing_set(:playing)
+          player.standing_set(:gaming)
         end
       end
+    end
+
+    if dealer_disposition == :blackjack
+      @players.select { |p| p.status == :in }.each do |player|
+        player.play_status(false)
+        player.standing_set(:loss) # Everybody loses
+      end
+      true
+    else
+      false
     end
   end
 
