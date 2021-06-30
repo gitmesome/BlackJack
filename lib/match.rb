@@ -37,7 +37,11 @@ class Match
   def show_matches
     @stats.each do |stat|
       puts stat[:hands]
-      puts "Winner - #{stat[:result][0] == 'w' ? 'Player' : 'Dealer'}\n\n"
+      if stat[:result][0] == 'p'
+        puts "We have a push!\n\n"
+      else
+        puts "Winner - #{stat[:result][0] == 'w' ? 'Player' : 'Dealer'}\n\n"
+      end
     end
   end
 

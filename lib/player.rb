@@ -12,11 +12,11 @@ class Player
   def initialize(hand)
     @hand = hand
     @status = :in
-    @standing = :playing
+    @standing = :gaming
   end
 
-  def play_status(playing)
-    @status = playing ? :in : :out
+  def play_status(gaming)
+    @status = gaming ? :in : :out
   end
 
   def standing_set(standing)
