@@ -18,6 +18,7 @@ class TestGame < Minitest::Test
     @card4 = Card.new('Diamonds', 6, :nine)
     @card5 = Card.new('Diamonds', 2, :two)
     @card6 = Card.new('Diamonds', 5, :five)
+    @card7 = Card.new('Diamonds', 7, :seven)
     @game = Game.new(@dealer, @players, @shoe)
   end
 
@@ -43,19 +44,19 @@ class TestGame < Minitest::Test
   def test_resolve_stand_walk_to
     @players[0].hit(@card2)
     @game.resolve
-    assert_equal(:playing, @players[0].standing, 'P1 should have playing')
+    assert_equal(:gaming, @players[0].standing, 'P1 should have gaming')
     assert_equal(:in, @players[0].status, 'P1 should be in')
     assert_equal(9, @players[0].blackjack_twoone_bust_score, 'P1 should have a score')
 
     @players[0].hit(@card4)
     @game.resolve
-    assert_equal(:playing, @players[0].standing, 'P1 should have playing')
+    assert_equal(:gaming, @players[0].standing, 'P1 should have gaming')
     assert_equal(:in, @players[0].status, 'P1 should be in')
     assert_equal(15, @players[0].blackjack_twoone_bust_score, 'P1 should have a score')
 
     @players[0].hit(@card6)
     @game.resolve
-    assert_equal(:playing, @players[0].standing, 'P1 should have playing')
+    assert_equal(:gaming, @players[0].standing, 'P1 should have gaming')
     assert_equal(:in, @players[0].status, 'P1 should be in')
     assert_equal(:stand, @players[0].blackjack_twoone_bust_score, 'P1 should be standing')
   end
@@ -102,15 +103,15 @@ class TestGame < Minitest::Test
     @players[0].hit(@card4)
     @players[0].hit(@card1)
     @game.resolve
-    assert_equal(:bust, @players[0].blackjack_twoone_bust_score, 'P1 is busted')
-    assert_equal(:loss, @players[0].standing, 'P1 should have loss on bust')
-    assert_equal(:out, @players[0].status, 'P1 should be out')
-    assert_equal(%w[l p], @game.result[:result], 'busted')
+    assert_equal(:bust, @players[0].blackjack_twoone_bust_score, 'P0 is busted')
+    assert_equal(:loss, @players[0].standing, 'P0 should have loss on bust')
+    assert_equal(:out, @players[0].status, 'P0 should be out')
+    assert_equal(%w[l g], @game.result[:result], 'busted')
   end
 
   def test_resolve_twoone_on_p1_not_p2_stand_on_d
     @dealer.hit(@card1)
-    @dealer.hit(@card4)
+    @dealer.hit(@card7)
     @players[0].hit(@card1)
     @players[0].hit(@card4)
     @players[0].hit(@card6)
@@ -167,7 +168,7 @@ class TestGame < Minitest::Test
 
   def test_resolve_blackjack_on_p1_not_d_p2
     @dealer.hit(@card1)
-    @dealer.hit(@card4)
+    @dealer.hit(@card7)
     @players[0].hit(@card1)
     @players[0].hit(@card3)
     @players[1].hit(@card1)
