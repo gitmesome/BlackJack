@@ -18,6 +18,7 @@ class TestGame < Minitest::Test
     @card4 = Card.new('Diamonds', 6, :nine)
     @card5 = Card.new('Diamonds', 2, :two)
     @card6 = Card.new('Diamonds', 5, :five)
+    @card7 = Card.new('Diamonds', 7, :seven)
     @game = Game.new(@dealer, @players, @shoe)
   end
 
@@ -110,7 +111,7 @@ class TestGame < Minitest::Test
 
   def test_resolve_twoone_on_p1_not_p2_stand_on_d
     @dealer.hit(@card1)
-    @dealer.hit(@card4)
+    @dealer.hit(@card7)
     @players[0].hit(@card1)
     @players[0].hit(@card4)
     @players[0].hit(@card6)
@@ -167,7 +168,7 @@ class TestGame < Minitest::Test
 
   def test_resolve_blackjack_on_p1_not_d_p2
     @dealer.hit(@card1)
-    @dealer.hit(@card4)
+    @dealer.hit(@card7)
     @players[0].hit(@card1)
     @players[0].hit(@card3)
     @players[1].hit(@card1)

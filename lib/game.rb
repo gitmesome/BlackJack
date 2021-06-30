@@ -16,7 +16,7 @@ class Game
     first_draw
     unless resolve
       next_player_draw
-      next_dealer_draw
+      next_dealer_draw unless resolve
       resolve
     end
     result
@@ -95,6 +95,8 @@ class Game
       end
       true
     else
+      return true if @players.select { |p| p.status == :in }.empty?
+
       false
     end
   end
